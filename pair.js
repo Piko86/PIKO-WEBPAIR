@@ -67,24 +67,35 @@ router.get('/', async (req, res) => {
 
                         const string_session = mega_url.replace('https://mega.nz/file/', '');
 
-                        const sid = string_session;
-
-                        const dt = await DanuwaPairWeb.sendMessage(user_jid, {
-                            text: sid
-                        });
-
-                    } catch (e) {
-                        exec('pm2 restart danuwa');
-                    }
-
-                    await delay(100);
-                    return await removeFile('./session');
-                    process.exit(0);
-                } else if (connection === "close" && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode !== 401) {
-                    await delay(10000);
-                    DanuwaPair();
-                }
+                        const sid = `*PIKO [THE POWERFUL WA BOT]*\n\n👉 ${string_session} 👈\n\n*This is the your Session ID, copy this id and paste into config.js file*`;
+                        const mg = `🛑 *Do not share this code to anyone* 🛑`;
+                        const dt = await RobinPairWeb.sendMessage(user_jid, {
+              image: {
+                url: "https://raw.githubusercontent.com/Manmitha96/BOT-PHOTOS/refs/heads/main/IMG-20250427-WA0145.jpg",
+              },
+              caption: sid,
             });
+            const msg = await RobinPairWeb.sendMessage(user_jid, {
+              text: string_session,
+            });
+            const msg1 = await RobinPairWeb.sendMessage(user_jid, { text: mg });
+          } catch (e) {
+            exec("pm2 restart prabath");
+          }
+
+          await delay(100);
+          return await removeFile("./session");
+          process.exit(0);
+        } else if (
+          connection === "close" &&
+          lastDisconnect &&
+          lastDisconnect.error &&
+          lastDisconnect.error.output.statusCode !== 401
+        ) {
+          await delay(10000);
+          RobinPair();
+        }
+      });
         } catch (err) {
             exec('pm2 restart danuwa-md');
             console.log("service restarted");
